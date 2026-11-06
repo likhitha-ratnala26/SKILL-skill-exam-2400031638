@@ -20,26 +20,29 @@ public class HostelServiceImpl implements HostelService{
 		return repo.save(h);
 	}
 
-	@Override
-	public Hostel updateHostel(Hostel h) {
-		// TODO Auto-generated method stub
-		Optional<Hostel> optional = repo.findById(h.getId());
-		if(optional.isPresent())
-		{
-			Hostel hostel = optional.get();
-			
-			hostel.setName(h.getName());
-			hostel.setType(h.getType());
-			hostel.setStatus(h.isStatus());
-			
-			return repo.save(hostel);
-		}
-		else
-		{
-			return null;
-		}
-		
-	}
+
+@Override
+public Hostel updateHostel(Hostel h) {
+    if (h.getId() == null) {
+        return null;
+    }
+
+    Optional<Hostel> optional = repo.findById(h.getId());
+
+    if (optional.isPresent()) {
+        Hostel hostel = optional.get();
+
+        hostel.setName(h.getName());
+        hostel.setType(h.getType());
+        hostel.setStatus(h.isStatus());
+        hostel.setLocation(h.getLocation());
+
+        return repo.save(hostel);
+    } else {
+        return null;
+    }
+}
+
 
 	@Override
 	public String deleteHostelById(Long id) {
